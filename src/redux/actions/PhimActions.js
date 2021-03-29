@@ -22,7 +22,7 @@ export const layDanhSachPhimAction = () => {
             dispatch ({
                 type:'closeLoading'
             })
-        },800)
+        },500)
     }
 }
 
@@ -43,5 +43,28 @@ export const layThongTinChiTietPhimAction = (maPhim) => {
         }catch (erros){
 
         }
+    }
+}
+
+//Lấy lịch chiếu phim
+
+export const layThongTinPhongVeAction = (maLichChieu) => {
+    return async(dispatch) => {
+        
+        try {
+            let result = await axios({
+                url: `https://movie0706.cybersoft.edu.vn/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${maLichChieu}`,
+                method: 'GET'
+            })
+
+            dispatch({
+                type:'LAY_THONG_TIN_PHONG_VE',
+                thongTinPhongVe: result.data
+            })
+
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 }

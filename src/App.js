@@ -18,6 +18,7 @@ import HookUseRef from "./pages/Hooks/HookUseRef";
 import ParentComponent from "./pages/HOC/ParentComponent";
 import HomeTemplate from "./templates/HomeTemplate";
 import { AdminTemplate } from "./templates/AdminTemplate";
+import Checkout from "./pages/Checkout/Checkout";
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
           <HomeTemplate exact path="/login" Component={Login}/>
           <HomeTemplate exact path="/register" Component={Register}/>
           {/* <Route exact path="/lifecycle" component={Lifecycle} /> */}
-          <Route exact path="/lifecycle" render={(propsRoute) => {
+          <Route exact path="/lifecycle" render={(propsRoute) => {  // Tham số chứa các props của thẻ route
             return <div>
               <h3> Đây là Component LifeCylce</h3>
               <Lifecycle {...propsRoute}/>
@@ -46,6 +47,7 @@ function App() {
           <HomeTemplate exact path="/baitapchonxe" Component={BaiTapChonXe}/>
           <HomeTemplate exact path="/reduxhookhome" Component={ReduxHookHome}/>
           <HomeTemplate exact path="/details/:id" Component={Details}/>
+          <HomeTemplate exact path="/checkout/:id" Component={Checkout} />
           {/* UseCallBack  */}
           <HomeTemplate exact path="/hookusecallback" Component={HookUseCallBack}/>
           {/* UseMemo */}
