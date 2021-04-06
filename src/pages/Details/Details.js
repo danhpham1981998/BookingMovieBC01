@@ -52,30 +52,33 @@ export default function Details(props) {
       <div className="mt-5">
         <div className="row">
           <div className="col-4 nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            {chiTietPhim.heThongRapChieu?.map((item,index) => {
+            {chiTietPhim.heThongRapChieu?.map((heThongRap,index) => {
               
               let activeClass = index === 0 ? 'active' : '';
 
-                return <a key={index} className={`nav-link ${activeClass}`} id="v-pills-home-tab" data-toggle="pill" href={`#${item.maHeThongRap}`} role="tab" aria-controls={item.maHeThongRap} aria-selected="true">
-                        <img className="mx-3" src={item.logo} width="50"/>
-                                {item.tenHeThongRap}
+                return <a key={index} className={`nav-link ${activeClass}`} id="v-pills-home-tab" data-toggle="pill" href={`#${heThongRap.maHeThongRap}`} role="tab" aria-controls={heThongRap.maHeThongRap} aria-selected="true">
+                        <img className="mx-3" src={heThongRap.logo} width="50"/>
+                                {heThongRap.tenHeThongRap}
                       </a>
             })}
           </div>
           <div className="col-8 tab-content" id="v-pills-tabContent">
-            {chiTietPhim.heThongRapChieu?.map((item,index) => {
-              let activeClass = index === 0 ? 'active' : '';
+            {chiTietPhim.heThongRapChieu?.map((heThognRap,index) => {
 
-              return <div key={index} className={`tab-pane fade show ${activeClass}`} id={item.maHeThongRap} role="tabpanel" aria-labelledby="v-pills-home-tab">
+              const activeClass = index === 0 ? 'show active' : '';
+
+              return <div key={index} className={`tab-pane fade show ${activeClass}`} id={heThognRap.maHeThongRap} role="tabpanel" aria-labelledby="v-pills-profile-tab">
                   
                   {/* Load cụm rạp chiếu từ heThongRap.cumRapChieu */}
-                  {item.cumRapChieu?.map((cumRap,index) => {
+                  {heThognRap.cumRapChieu?.map((cumRap,index) => {
                       return <div key={index}>
                           <h5>Cụm rạp: {cumRap.tenCumRap}</h5>
                           <div className='row'>
                               {cumRap.lichChieuPhim?.slice(0,8).map((lichChieu,index) => {
                                   return <span key={index} className='col-6 font-italic text-danger'>
-                                      Lịch chiếu: <NavLink to={`/checkout/${lichChieu.maLichChieu}`}>{moment(lichChieu.ngayChieuGioChieu).format('hh:mm A')}</NavLink>
+                                      Lịch chiếu: <NavLink to={`/checkout/${lichChieu.maLichChieu}`} className="col-3 text-success">
+                                                    {moment(lichChieu.ngayChieuGioChieu).format('hh:mm A')}
+                                                </NavLink>
                                   </span>
                               })}
                           </div>

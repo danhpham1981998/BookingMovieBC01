@@ -1,5 +1,5 @@
 import "./App.scss";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Router, Switch } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
@@ -19,11 +19,16 @@ import ParentComponent from "./pages/HOC/ParentComponent";
 import HomeTemplate from "./templates/HomeTemplate";
 import { AdminTemplate } from "./templates/AdminTemplate";
 import Checkout from "./pages/Checkout/Checkout";
+//import history
+import {createBrowserHistory} from 'history'
+//Đối tượng giúp chuyển hướng trang bất kì file nào
+export const history = createBrowserHistory();
+// export const history = createBrowserHistory();
 
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router history={history}>
     {/* <Header/> */}
       <Switch>
         <div className="App">
@@ -32,10 +37,9 @@ function App() {
           <HomeTemplate exact path="/home/" Component={Home} />
           <AdminTemplate exact path="/login/" Component={Login}/>
           <HomeTemplate exact path="/contact" Component={Contact}/>
-          <HomeTemplate exact path="/login" Component={Login}/>
           <HomeTemplate exact path="/register" Component={Register}/>
           {/* <Route exact path="/lifecycle" component={Lifecycle} /> */}
-          <Route exact path="/lifecycle" render={(propsRoute) => {  // Tham số chứa các props của thẻ route
+          <HomeTemplate exact path="/lifecycle" render={(propsRoute) => {  // Tham số chứa các props của thẻ route
             return <div>
               <h3> Đây là Component LifeCylce</h3>
               <Lifecycle {...propsRoute}/>
@@ -60,7 +64,7 @@ function App() {
           <HomeTemplate exact path="/" Component={Home}/>
         </div>
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 }
 

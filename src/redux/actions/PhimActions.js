@@ -19,6 +19,7 @@ export const layDanhSachPhimAction = () => {
                 type:'LAY_DANH_SACH_PHIM',
                 mangPhim:result.data
             });
+            //Tắt loadings
             dispatch ({
                 type:'closeLoading'
             })
@@ -52,7 +53,7 @@ export const layThongTinPhongVeAction = (maLichChieu) => {
     return async(dispatch) => {
         
         try {
-            let result = await axios({
+            const result = await axios({
                 url: `https://movie0706.cybersoft.edu.vn/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${maLichChieu}`,
                 method: 'GET'
             })

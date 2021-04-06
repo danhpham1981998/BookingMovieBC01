@@ -1,6 +1,9 @@
 import React, {Fragment,useEffect } from 'react'
-import {useSelector,useDispatch} from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { Redirect } from 'react-router';
+import { taiKhoan } from '../../configs/setting';
 import {layThongTinPhongVeAction} from '../../redux/actions/PhimActions';
+import {datVeAction} from '../../redux/actions/QuanLyDatVeAction';
 import './Checkout.css'
 
 
@@ -13,9 +16,9 @@ export default function Checkout(props) {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        let {id} = props.match.params;
+    let {id} = props.match.params;
 
+    useEffect(() => {
         dispatch(layThongTinPhongVeAction(id))
     },[])
     console.log(thongTinPhongVe);
@@ -68,6 +71,10 @@ export default function Checkout(props) {
         }, 0)
     }
 
+    if(!localStorage.getItem(taiKhoan)){
+        return <Redirect to='/login' />
+    }
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -90,7 +97,32 @@ export default function Checkout(props) {
                     </h3>
                     <hr/>
                     <div>
-                        <button className="w-100 text-center btn btn-danger">ĐẶT VÉ</button>
+                        <button className="w-100 text-center btn btn-danger" onClick={() => {
+                            // Gọi action loading open
+                            dispatch ({
+                                type:'openLoading'
+                            })
+
+                            setTimeout (async () => {
+                                //Gồm 3 bước chuyền dữ liệu về BE:
+                                //B1: Lấy ra thông tin đăng nhập từ localStorage chuyển về object
+                                let userlogin = JSON.parse(localStorage.getItem(taiKhoan));
+
+                                //B2: Tạo ra data như BE yêu cầu từ thông tin người dùng đặt ghế
+                                let thongTinDatVe = {
+                                    "maLichChieu": props.match.params.id,
+                                    "danhSachVe": danhSachGheDangDat,
+                                    "taiKhoanNguoiDung": userlogin.taiKhoan
+                                }
+
+                                //B3: Chuyền dữ liệu về BE
+                                dispatch(datVeAction(thongTinDatVe));
+                                //Tắt loadings
+                                dispatch ({
+                                    type:'closeLoading'
+                                })
+                            },500)
+                        }}>ĐẶT VÉ</button>
                     </div>
                 </div>
             </div>
